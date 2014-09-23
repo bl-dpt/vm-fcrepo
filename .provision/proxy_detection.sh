@@ -13,11 +13,22 @@ function installCntlm() {
 function reconfigureEnvForCntlm(){
     PORT_NUMBER=`grep Listen /vagrant/proxy_settings.conf| tr -s -d [:alpha:][:space:] "\n"`
     HTTP_PROXY="http://127.0.0.1:$PORT_NUMBER"
+
     # overwrite system wide http_proxy settings
+    # (1) /etc/environment
     echo "HTTP_PROXY=$HTTP_PROXY" >> /etc/environment
     echo "HTTPS_PROXY=$HTTP_PROXY" >> /etc/environment
     echo "FTP_PROXY=$HTTP_PROXY" >> /etc/environment
-    # apt: overwrite real proxy with cntlm settings..
+    # (2) /etc/profile.d/proxy.sh
+    echo "export HTTP_PROXY=$HTTP_PROXY" > /etc/profile.d/proxy.sh
+    echo "export HTTPS_PROXY=$HTTP_PROXY" >> /etc/profile.d/proxy.sh
+    echo "export FTP_PROXY=$HTTP_PROXY" >> /etc/profile.d/proxy.sh
+    echo "export http_proxy=$HTTP_PROXY" > /etc/profile.d/proxy.sh
+    echo "export https_proxy=$HTTP_PROXY" >> /etc/profile.d/proxy.sh
+    echo "export ftp_proxy=$HTTP_PROXY" >> /etc/profile.d/proxy.sh
+    echo "export NO_PROXY=\"localhost,127.0.0.1,.example.com\"" >> /etc/profile.d/proxy.sh
+    echo "export no_proxy=\"localhost,127.0.0.1,.example.com\"" >> /etc/profile.d/proxy.sh
+    # (3) /etc/apt/apt.conf.d
     echo "Acquire::http::Proxy \"$HTTP_PROXY\";" > /etc/apt/apt.conf.d/01proxy;
     echo "Acquire::https::Proxy \"$HTTP_PROXY\";" >> /etc/apt/apt.conf.d/01proxy;
 }

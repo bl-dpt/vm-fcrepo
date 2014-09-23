@@ -16,4 +16,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :shell, path: ".provision/vagrant.sh"
 
+  config.vm.provider :virtualbox do |vb|
+    vb.memory = 2024
+    vb.cpus = 2
+  end
+
 end
