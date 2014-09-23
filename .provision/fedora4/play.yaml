@@ -1,0 +1,15 @@
+---
+
+- hosts: local
+  user: root
+  tasks:
+    - name: Install java and maven
+      apt: pkg={{ item }} force=yes update_cache=yes
+      with_items:
+        - openjdk-7-jdk
+        - maven
+    - command: mkdir /usr/local/scape
+    - copy: src=/vagrant/.provision/fedora4/jetty-runner-9.2.0.RC0.jar dest=/usr/local/scape/jetty-runner.jar
+    - copy: src=/vagrant/.provision/fedora4/fcrepo-scape-0.0.1.war dest=/usr/local/scape/fcrepo.war
+    - name: run the fedora4 war
+      command: java -jar /usr/local/scape/jetty-runner.jar /usr/local/scape/fcrepo.war

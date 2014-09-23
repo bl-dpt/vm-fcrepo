@@ -1,0 +1,49 @@
+{
+    "builders":[{
+        "type": "docker",
+        "image": "ubuntu",
+        "commit": true,
+        "run_command": ["-d", "-i", "-t", "--net=host", "{{.Image}}", "/bin/bash"]
+    }],
+    "provisioners":[
+        {
+            "type": "file",
+            "source": "/etc/apt/apt.conf.d/01proxy",
+            "destination": "/etc/apt/apt.conf.d/01proxy"
+        },
+        {
+            "type": "file",
+            "source": "/etc/environment",
+            "destination": "/etc/environment"
+        },
+        {
+            "type": "shell",
+            "inline": [ "mkdir /usr/local/scape" ]
+        },
+        {
+        "type": "file",
+        "source": "/vagrant/.provision/fedora4/fcrepo-scape-0.0.1.war",
+        "destination": "/usr/local/scape/fcrepo.war"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "export http_proxy=`grep HTTP_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`",
+                "export https_proxy=`grep HTTPS_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`",
+                "export ftp_proxy=`grep FTP_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`",
+                "apt-get update",
+                "apt-get install -y wget",
+                "wget http://central.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.2.0.RC0/jetty-runner-9.2.0.RC0.jar -O /usr/local/scape/jetty-runner.jar",
+                "apt-get install -y openjdk-7-jdk",
+                "java -jar /usr/local/scape/jetty-runner.jar /usr/local/scape/fcrepo.war &"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "docker-tag",
+            "repository": "fedora4",
+            "tag": "no-fedora-yet"
+        }
+    ]
+}
