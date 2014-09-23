@@ -40,5 +40,5 @@ function installAnsible() {
 # MAIN #
 ########
 
-source /vagrant/provision/proxy_detection.sh
+source /vagrant/.provision/proxy_detection.sh
 installPacker
