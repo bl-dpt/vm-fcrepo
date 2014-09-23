@@ -30,15 +30,21 @@
             "inline": [
                 "export http_proxy=`grep HTTP_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`",
                 "export https_proxy=`grep HTTPS_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`",
-                "export ftp_proxy=`grep FTP_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`",
-                "apt-get update",
-                "apt-get install -y wget",
-                "wget http://central.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.2.0.RC0/jetty-runner-9.2.0.RC0.jar -O /usr/local/scape/jetty-runner.jar",
-                "apt-get install -y openjdk-7-jdk",
-                "echo '#!/bin/bash' > /usr/local/bin/run_fcrepo",
-                "chmod +x /usr/local/bin/run_fcrepo",
-                "echo 'java -jar /usr/local/scape/jetty-runner.jar /usr/local/scape/fcrepo.war' >> /usr/local/bin/run_fcrepo"
+                "export ftp_proxy=`grep FTP_PROXY /etc/environment| tr -s -d \"HTTP_PROXY=\" \"\n\"`"
             ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "apt-get -y update",
+                "apt-get install -y python-pip python-dev",
+                "pip install ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "/vagrant/.provision/fedora4/play.yaml",
+            "inventory_file": "/vagrant/.provision/ansible_inventory"
         }
     ],
     "post-processors": [
