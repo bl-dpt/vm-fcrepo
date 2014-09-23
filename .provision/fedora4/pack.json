@@ -35,7 +35,9 @@
                 "apt-get install -y wget",
                 "wget http://central.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.2.0.RC0/jetty-runner-9.2.0.RC0.jar -O /usr/local/scape/jetty-runner.jar",
                 "apt-get install -y openjdk-7-jdk",
-                "java -jar /usr/local/scape/jetty-runner.jar /usr/local/scape/fcrepo.war &"
+                "echo '#!/bin/bash' > /usr/local/bin/run_fcrepo",
+                "chmod +x /usr/local/bin/run_fcrepo",
+                "echo 'java -jar /usr/local/scape/jetty-runner.jar /usr/local/scape/fcrepo.war' >> /usr/local/bin/run_fcrepo"
             ]
         }
     ],
@@ -43,7 +45,7 @@
         {
             "type": "docker-tag",
             "repository": "fedora4",
-            "tag": "no-fedora-yet"
+            "tag": "basic-fedora-war-served"
         }
     ]
 }
