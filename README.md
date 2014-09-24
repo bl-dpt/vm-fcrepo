@@ -1,7 +1,12 @@
-Playing with vagrant packer, docker and ansible
+Playing with vagrant, docker and ansible
 ===============================================
 
-TODO: re-implement ansible
+Basic concept
+-------------
+We are cloning and building fedora4 on the host(-vagrant-)vm, then
+we deploy the necessary bits to a docker container. This approach
+can nicely be integrated with other containers and the container
+itself stays as lightweight as possible.
 
 Start the vagrant vm
 --------------------
@@ -10,12 +15,19 @@ The fedora war has to be put into .provision/fedora4
     $ vagrant up
     $ vagrant ssh
 
+Set up the host environment
+---------------------------
+(1) First we install java and maven on the host machine
+    $ ansible-playbook -i /vagrant/ansible/inventory /vagrant/ansible/prepare_host_build_env.yml --connection=local
+(2) Then we clone the fedora4 repository and build it with maven
+    $ ansible-playbook -i /vagrant/ansible/inventory /vagrant/ansible/get_and_build_fedora4.yml --connection=local
+TODO: have set maven to skip tests, think it's AGAIN a proxy issue (fails in HTTP API module), this has to be changed
+      on a non-proxy environment)
 
-Build the docker container with packer
---------------------------------------
-Then, on the vm:
 
-    $ packer build /vagrant/.provision/fedora4/pack.json
+Build the docker container
+--------------------------
+TODO:
 
 Run the container
 -----------------

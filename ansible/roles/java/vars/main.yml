@@ -1,0 +1,6 @@
+---
+# file: roles/java/vars/main.yml
+
+# these vars should be on a higher level?
+http_proxy: http://127.0.0.1:3310
+

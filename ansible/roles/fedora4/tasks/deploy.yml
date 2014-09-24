@@ -1,0 +1,6 @@
+---
+# file: roles/fedora4/tasks/deploy.yml
+
+- name: copy necessary fcrepo contents
+  file: src=bla dest=blub
+

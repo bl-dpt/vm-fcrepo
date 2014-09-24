@@ -1,0 +1,9 @@
+---
+# file: roles/fedora4/vars/main.yml
+
+# these vars should be on a higher level?
+scape_dir: /usr/local/scape
+binary_dir: /usr/local/bin
+
+# this should be here.
+fcrepo_version: fcrepo-4.0.0-beta-02

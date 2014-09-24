@@ -1,0 +1,18 @@
+---
+# file: roles/fedora4/tasks/main.yml
+
+# ensure the scape dir exists
+- file: dest={{ scape_dir }} state=directory owner=vagrant
+  sudo: yes
+
+# 
+
+# get fcrepo from git
+- git: repo=https://github.com/fcrepo4/fcrepo4.git
+       dest={{ scape_dir }}/fcrepo4
+       version={{ fcrepo_version }}
+
+# build fcrepo with maven
+- command: mvn clean install -DskipTests=true
+           chdir={{ scape_dir }}/fcrepo4 
+

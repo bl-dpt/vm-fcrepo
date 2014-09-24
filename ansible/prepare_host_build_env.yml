@@ -1,0 +1,7 @@
+---
+# file: prepare_host_env.yml
+
+- hosts: local
+  roles:
+    - java
+    - maven

@@ -1,0 +1,6 @@
+---
+# file: fedora4.yml
+
+- hosts: local
+  roles:
+    - fedora4

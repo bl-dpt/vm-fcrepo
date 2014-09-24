@@ -17,7 +17,10 @@ PACKER_VERSION="packer_0.7.1_linux_amd64"
 PACKER_URL="https://dl.bintray.com/mitchellh/packer/$PACKER_VERSION.zip"
 PACKER_BINS=/usr/local/packer
 
-apt-get update
+
+function installMaven() {
+ apt-get install -y maven
+}
 
 function installPacker() {
   wget $PACKER_URL
@@ -36,9 +39,11 @@ function installAnsible() {
   pip install ansible
 }
 
+
 ########
 # MAIN #
 ########
 
-source /vagrant/.provision/proxy_detection.sh
-installPacker
+apt-get update
+source /vagrant/scripts/proxy_detection.sh
+installAnsible

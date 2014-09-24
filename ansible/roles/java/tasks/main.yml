@@ -1,0 +1,8 @@
+---
+# file roles/java/tasks/main.yml
+
+- name: Install java
+  sudo: yes
+  apt: pkg={{ item }} force=yes update_cache=yes
+  with_items:
+    - openjdk-7-jdk

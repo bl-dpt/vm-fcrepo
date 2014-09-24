@@ -14,7 +14,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.pull_images "ubuntu"
   end
 
-  config.vm.provision :shell, path: ".provision/vagrant.sh"
+  config.vm.provision :shell, path: "scripts/vagrant.sh"
+
+  config.vm.synced_folder 'ansible', '/vagrant/ansible', mount_options: ["fmode=666"]
 
   config.vm.provider :virtualbox do |vb|
     vb.memory = 2024

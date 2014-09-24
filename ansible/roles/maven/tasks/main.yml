@@ -1,0 +1,9 @@
+---
+# file roles/maven/tasks/main.yml
+
+- name: Install maven on the host
+  sudo: yes
+  apt: pkg={{ item }} force=yes update_cache=yes
+  with_items:
+    - maven
+
