@@ -1,9 +1,10 @@
 ---
 # file: roles/fedora4/vars/main.yml
 
-# these vars should be on a higher level?
-scape_dir: /usr/local/scape
-binary_dir: /usr/local/bin
+java: java-7-openjdk-amd64
+jetty_version: 9.2.0.RC0
+fedora4_build_dir: /usr/local/scape/fedora4/build
+fedora4_export_dir: /usr/local/scape/fedora4/export
+fedora4_dockerfile: /vagrant/docker/fedora4/Dockerfile
 
-# this should be here.
 fcrepo_version: fcrepo-4.0.0-beta-02

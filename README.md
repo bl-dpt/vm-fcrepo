@@ -27,27 +27,29 @@ TODO: have set maven to skip tests, think it's AGAIN a proxy issue (fails in HTT
 
 Build the docker container
 --------------------------
-TODO:
+There's an ansible var set in the fedora4 role to have everything to be copied to the docker container
+in /usr/local/scape/fedora4/export/, this can be changed but has then to be adapted here:
+    $ docker build -t="fcrepo4:version-x" /usr/local/scape/fedora4/export/
 
 Run the container
 -----------------
 To have a look at whether the docker image was created sucessfully:
 
     $ docker images
-    REPOSITORY          TAG                           IMAGE ID            CREATED             VIRTUAL SIZE
-    fedora4             basic-fedora-war-served       e2b12b2081bb        6 minutes ago       732.1 MB
+    REPOSITORY          TAG             IMAGE ID            CREATED             VIRTUAL SIZE
+    fedora4             version-x       e2b12b2081bb        6 minutes ago       732.1 MB
 
 Run it with the proccess we want to start:
 
-    $ docker run -d --net=host fedora4:basic-fedora-war-served /usr/local/bin/run_fcrepo
+    $ docker run -d --net=host fedora4:version-x /usr/local/bin/run_fcrepo
 
 Work with the container
 -----------------------
 To do sth with the the running container it's good to find out its name
 
     $ docker ps -l
-    ONTAINER ID        IMAGE                             COMMAND                CREATED             STATUS              PORTS               NAMES
-    b29a2880cf80        fedora4:basic-fedora-war-served   "/usr/local/bin/run_   17 seconds ago      Up 15 seconds                           berserk_engelbart
+    ONTAINER ID        IMAGE                COMMAND                CREATED             STATUS              PORTS               NAMES
+    b29a2880cf80        fedora4:version-x   "/usr/local/bin/run_   17 seconds ago      Up 15 seconds                           berserk_engelbart
 
 Now you can follow the jetty logs (same effect as tail -f) like this:
 

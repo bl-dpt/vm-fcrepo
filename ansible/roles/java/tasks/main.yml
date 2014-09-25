@@ -5,4 +5,5 @@
   sudo: yes
   apt: pkg={{ item }} force=yes update_cache=yes
   with_items:
-    - openjdk-7-jdk
+    - {{ java_version }}
+
