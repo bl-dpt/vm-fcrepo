@@ -1,46 +1,45 @@
 ---
 
-# ensure the fedora specific build dir exists
-- file: >
+- name: ensure the fedora specific build dir exists
+  sudo: yes
+  file: >
     dest={{ fedora4_build_dir }}
+    owner={{ host_username }}
     state=directory
 
-# ensure the fedora specific export dir exists
-- file: >
+- name: ensure the fedora specific export dir exists
+  sudo: yes
+  file: >
     dest={{ fedora4_export_dir }}
+    owner={{ host_username }}
     state=directory
 
-# copy the Dockerfile to the export dir, needs the context to be created..
-- copy: >
+- name: copy the Dockerfile to the export dir, needs the context to be created..
+  copy: >
     src={{ fedora4_dockerfile }}
     dest={{ fedora4_export_dir }}
 
-# get fcrepo from git
-- git: repo=https://github.com/fcrepo4/fcrepo4.git
+- name: get fcrepo from git
+  git: repo=https://github.com/fcrepo4/fcrepo4.git
        dest={{ fedora4_build_dir }}
        version={{ fcrepo_version }}
 
-# build fcrepo with maven
-#- command: mvn clean install -DskipTests=true
-#           chdir={{ fedora4_build_dir }}
+- name: build fcrepo with maven
+  command: mvn clean install -DskipTests=true
+           chdir={{ fedora4_build_dir }}
 
-# copy the war to the export directory
-- copy: >
+- name: copy the war to the export directory
+  copy: >
     src={{ fedora4_build_dir }}/fcrepo-webapp/target/fcrepo-webapp-4.0.0-beta-02.war
     dest={{ fedora4_export_dir }}/fcrepo-webapp.war
     force=yes
 
-# get jetty runner
-- get_url: >
+- name: get jetty runner
+  get_url: >
     url=http://central.maven.org/maven2/org/eclipse/jetty/jetty-runner/{{ jetty_version }}/jetty-runner-{{ jetty_version }}.jar
     dest={{ fedora4_export_dir }}/jetty-runner.jar
 
-# create a 'java' directory in export
-#- file: >
-#    dest={{ fedora4_export_dir }}/java
-#    state=directory
-
-# copy the host's java to the export directory
-- copy: >
+- name: copy the host's java to the export directory
+  copy: >
     src=/usr/lib/jvm/{{ java }}/jre
     dest={{ fedora4_export_dir }}

@@ -5,5 +5,5 @@
   sudo: yes
   apt: pkg={{ item }} force=yes update_cache=yes
   with_items:
-    - {{ java_version }}
+    - "{{ java_version }}"
 

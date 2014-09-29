@@ -1,6 +1,7 @@
 ---
 # file: roles/fedora4/vars/main.yml
 
+host_username: vagrant
 java: java-7-openjdk-amd64
 jetty_version: 9.2.0.RC0
 fedora4_build_dir: /usr/local/scape/fedora4/build
