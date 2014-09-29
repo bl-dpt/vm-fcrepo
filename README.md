@@ -27,9 +27,7 @@ TODO: have set maven to skip tests, think it's AGAIN a proxy issue (fails in HTT
 
 Build the docker container
 --------------------------
-There's an ansible var set in the fedora4 role to have everything to be copied to the docker container
-in /usr/local/scape/fedora4/export/, this can be changed but has then to be adapted here:
-    $ docker build -t="fcrepo4:version-x" /usr/local/scape/fedora4/export/
+    $ ansible-playbook -i /vagrant/ansible/inventory /vagrant/ansible/deploy_fcrepo4.yml --connection=local
 
 Run the container
 -----------------
