@@ -1,5 +1,4 @@
 ---
-# file: roles/fedora4/vars/main.yml
 
 host_username: vagrant
 java: java-7-openjdk-amd64
