@@ -1,0 +1,5 @@
+---
+
+- hosts: local
+  tasks:
+    - include: roles/fedora4/tasks/deploy.yml

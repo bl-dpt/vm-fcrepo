@@ -1,6 +1,6 @@
 ---
 # file: roles/fedora4/tasks/deploy.yml
 
-- name: copy necessary fcrepo contents
-  file: src=bla dest=blub
+- name: copy necessary fcrepo contents to target machine
+  docker_image: path="{{ fedora4_export_dir }}" name=fcrepo4 tag=version-x state=present
 
